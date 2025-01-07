@@ -1,5 +1,5 @@
 #
-#  Be sure to run `pod spec lint DXPAnalyticsLib.podspec' to ensure this is a
+#  Be sure to run `pod spec lint DXPAnalyticsManagerLibs.podspec' to ensure this is a
 #  valid spec and to remove all comments including this before submitting the spec.
 #
 #  To learn more about Podspec attributes see https://guides.cocoapods.org/syntax/podspec.html
@@ -16,15 +16,15 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "DXPAnalyticsLib"
-  spec.version      = "1.0.8"
-  spec.summary      = "DXP Analytics Lib"
+  spec.version      = "1.0.9"
+  spec.summary      = "DXP Analytics Manager."
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = "DXP 数据埋点上报SDK"
+  spec.description  = "DXP Analytics Manager SDK"
 
   spec.homepage     = "https://github.com/HelloGitHub123/DXPAnalyticsLib"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
@@ -63,7 +63,7 @@ Pod::Spec.new do |spec|
   #
 
   # spec.platform     = :ios
-  spec.platform    = :ios, "14.0"
+  spec.platform     = :ios, "14.0"
 
   #  When using multiple platforms
   # spec.ios.deployment_target = "5.0"
@@ -125,7 +125,6 @@ Pod::Spec.new do |spec|
   spec.dependency 'SensorsAnalyticsSDK/Exception','~> 4.2.5'
   spec.dependency 'Firebase/Analytics'
   spec.static_framework = true
-
 
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
