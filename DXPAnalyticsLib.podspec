@@ -123,7 +123,7 @@ Pod::Spec.new do |spec|
 
   spec.dependency 'SensorsAnalyticsSDK/Core','~> 4.4.6'
   spec.dependency 'SensorsAnalyticsSDK/Exception','~> 4.4.6'
-  spec.dependency 'Firebase/Analytics'
+  spec.dependency 'Firebase/Analytics','~> 10.25.0'
   # spec.static_framework = true
 
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
