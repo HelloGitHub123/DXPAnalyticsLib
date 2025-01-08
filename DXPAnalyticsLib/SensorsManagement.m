@@ -121,6 +121,22 @@ static SensorsManagement *manager = nil;
     
     [[SensorsAnalyticsSDK sharedInstance] registerSuperProperties:dic];
 }
+
+// 取消注册公共属性
+- (void)setUnregisterSuperProperty:(NSString *)key {
+	if (!key || key.length == 0) {
+		return;
+	}
+	
+	[[SensorsAnalyticsSDK sharedInstance] unregisterSuperProperty:key];
+}
+
+// 获取当前注册的公共属性
+- (NSDictionary *)getCurrentSuperProperties {
+	NSDictionary *dic = [[SensorsAnalyticsSDK sharedInstance] currentSuperProperties];
+	return dic;
+}
+
 #else
 + (instancetype)sharedInstanceWithLaunchOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl openLog:(BOOL)open{
     static dispatch_once_t onceToken;

@@ -29,6 +29,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 设置事件的公共属性
 - (void)setRegisterSuperProperties:(NSDictionary *)dic;
+
+// 取消注册公共属性
+- (void)setUnregisterSuperProperty:(NSString *)key;
+
+// 获取当前注册的公共属性
+- (NSDictionary *)getCurrentSuperProperties;
 @end
 
 NS_ASSUME_NONNULL_END
