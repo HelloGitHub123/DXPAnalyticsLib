@@ -121,8 +121,8 @@ Pod::Spec.new do |spec|
   # spec.library   = "iconv"
   # spec.libraries = "iconv", "xml2"
 
-  spec.dependency 'SensorsAnalyticsSDK/Core','~> 4.4.6', :modular_headers => true
-  spec.dependency 'SensorsAnalyticsSDK/Exception','~> 4.4.6', :modular_headers => true
+  spec.dependency 'SensorsAnalyticsSDK/Core','~> 4.4.6'
+  spec.dependency 'SensorsAnalyticsSDK/Exception','~> 4.4.6'
   spec.dependency 'Firebase/Analytics'
   # spec.static_framework = true
 
