@@ -31,23 +31,20 @@ static SensorsManagement *manager = nil;
 
 + (instancetype)sharedInstanceWithLaunchOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl openLog:(BOOL)open
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        manager = [[SensorsManagement alloc] initWithLaunchOptions:launchOptions baseUrl:baseUrl openLog:open];
-    });
-    return manager;
+	[[self sharedInstance] SensorsAnalyticsByOptions:launchOptions baseUrl:baseUrl openLog:open];
+	return manager;
 }
 
-- (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl openLog:(BOOL)open
-{
-    self = [super init];
-    if (self)
-    {
-        
-        [self SensorsAnalyticsByOptions:launchOptions baseUrl:baseUrl openLog:open];
-    }
-    return self;
-}
+//- (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl openLog:(BOOL)open
+//{
+//    self = [super init];
+//    if (self)
+//    {
+//        
+//        [self SensorsAnalyticsByOptions:launchOptions baseUrl:baseUrl openLog:open];
+//    }
+//    return self;
+//}
 
 
 - (void)SensorsAnalyticsByOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl openLog:(BOOL)open{
