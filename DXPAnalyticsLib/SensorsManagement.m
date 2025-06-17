@@ -134,6 +134,18 @@ static SensorsManagement *manager = nil;
 	return dic;
 }
 
+- (void)logout {
+	[[SensorsAnalyticsSDK sharedInstance] logout];
+}
+
+- (void)login:(NSString *)loginId {
+	[[SensorsAnalyticsSDK sharedInstance] login:loginId];
+}
+
+- (void)bind:(NSString *)key value:(NSString *)value {
+	[[SensorsAnalyticsSDK sharedInstance] bind:key value:value];
+}
+
 #else
 + (instancetype)sharedInstanceWithLaunchOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl openLog:(BOOL)open{
     static dispatch_once_t onceToken;

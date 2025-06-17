@@ -35,6 +35,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 获取当前注册的公共属性
 - (NSDictionary *)getCurrentSuperProperties;
+
+//  注销，清空当前用户的 loginId
+- (void)logout;
+
+// 登录，设置当前用户的 loginId
+- (void)login:(NSString *)loginId;
+
+// 功能下绑定业务 ID 功能
+- (void)bind:(NSString *)key value:(NSString *)value;
 @end
 
 NS_ASSUME_NONNULL_END
