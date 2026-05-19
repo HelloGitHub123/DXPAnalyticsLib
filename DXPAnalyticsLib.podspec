@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "DXPAnalyticsLib"
-  spec.version      = "1.0.24"
+  spec.version      = "1.0.25"
   spec.summary      = "DXP Analytics Manager."
 
   # This description is used to generate tags and improve search results.
@@ -121,8 +121,8 @@ Pod::Spec.new do |spec|
   # spec.library   = "iconv"
   # spec.libraries = "iconv", "xml2"
 
-  spec.dependency 'SensorsAnalyticsSDK/Core','~> 4.4.6'
-  spec.dependency 'SensorsAnalyticsSDK/Exception','~> 4.4.6'
+  spec.dependency 'SensorsAnalyticsSDK/Core','~> 4.9.1'
+  spec.dependency 'SensorsAnalyticsSDK/Exception','~> 4.9.1'
   spec.dependency 'Firebase/Analytics','~> 11.10.0'
   spec.static_framework = true
 
