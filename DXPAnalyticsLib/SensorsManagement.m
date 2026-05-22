@@ -20,19 +20,43 @@ static SensorsManagement *manager = nil;
 @implementation SensorsManagement
 + (instancetype)sharedInstance
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        manager = [[SensorsManagement alloc] init];
-    });
-    return manager;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		manager = [[SensorsManagement alloc] init];
+	});
+	return manager;
 }
 
 #if __has_include(<SensorsAnalyticsSDK/SensorsAnalyticsSDK.h>)
 
-+ (instancetype)sharedInstanceWithLaunchOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl openLog:(BOOL)open
-{
++ (instancetype)sharedInstanceWithLaunchOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl openLog:(BOOL)open {
 	[[self sharedInstance] SensorsAnalyticsByOptions:launchOptions baseUrl:baseUrl openLog:open];
 	return manager;
+}
+
+- (void)SensorsAnalyticsByOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl openLog:(BOOL)open {
+	SAConfigOptions *options = [[SAConfigOptions alloc] initWithServerURL:SensorsAnalyticsUrl launchOptions:launchOptions];
+	//神策上报打通APP与H5
+	options.enableJavaScriptBridge = YES;
+	options.enableTrackAppCrash = YES;
+	options.enableTrackPageLeave = YES;
+	// 开启 Log
+	options.enableLog = open;
+	// 开启全埋点
+	options.autoTrackEventType = SensorsAnalyticsEventTypeAppStart |
+	SensorsAnalyticsEventTypeAppEnd;
+	/**
+	 * 其他配置，如开启可视化全埋点
+	 */
+	// 初始化 SDK
+	[SensorsAnalyticsSDK startWithConfigOptions:options];
+}
+
+
++ (instancetype)sharedInstanceWithLaunchOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl toNativeSize:(NSInteger)toNativeSize openLog:(BOOL)open
+{
+    [[self sharedInstance] SensorsAnalyticsByOptions:launchOptions baseUrl:baseUrl toNativeSize:toNativeSize openLog:open];
+    return manager;
 }
 
 //- (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl openLog:(BOOL)open
@@ -40,34 +64,34 @@ static SensorsManagement *manager = nil;
 //    self = [super init];
 //    if (self)
 //    {
-//        
+//
 //        [self SensorsAnalyticsByOptions:launchOptions baseUrl:baseUrl openLog:open];
 //    }
 //    return self;
 //}
 
 
-- (void)SensorsAnalyticsByOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl openLog:(BOOL)open{
+- (void)SensorsAnalyticsByOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl toNativeSize:(NSInteger)toNativeSize openLog:(BOOL)open{
     NSString * SensorsAnalyticsUrl = baseUrl; //@"http://192.168.193.9/portal-web/datagather/sa.gif?project=default&remark=default";
-    
+
     SAConfigOptions *options = [[SAConfigOptions alloc] initWithServerURL:SensorsAnalyticsUrl launchOptions:launchOptions];
     //神策上报打通APP与H5
     options.enableJavaScriptBridge = YES;
     options.enableTrackAppCrash = YES;
     options.enableTrackPageLeave = YES;
+	// 批量发送阈值
+	options.flushBulkSize = toNativeSize;
     // 开启 Log
     options.enableLog = open;
     // 开启全埋点
     options.autoTrackEventType = SensorsAnalyticsEventTypeAppStart |
-                                 SensorsAnalyticsEventTypeAppEnd |
-                                 SensorsAnalyticsEventTypeAppClick |
-                                 SensorsAnalyticsEventTypeAppViewScreen;
+                                 SensorsAnalyticsEventTypeAppEnd;
     /**
      * 其他配置，如开启可视化全埋点
      */
     // 初始化 SDK
     [SensorsAnalyticsSDK startWithConfigOptions:options];
-    
+
 }
 
 // 单事件名称
@@ -75,7 +99,7 @@ static SensorsManagement *manager = nil;
     if (!_sensorsDataEnabled) {
         return;
     }
-    
+
     [[SensorsAnalyticsSDK sharedInstance] track:name];
 }
 
@@ -84,12 +108,12 @@ static SensorsManagement *manager = nil;
     if (!_sensorsDataEnabled) {
         return;
     }
-    
+
     if (!dic || [dic allKeys].count == 0) {
         [self trackWithName:name];
         return;
     }
-    
+
     [[SensorsAnalyticsSDK sharedInstance] track:name withProperties:dic];
 }
 
@@ -98,11 +122,11 @@ static SensorsManagement *manager = nil;
     if (!_sensorsDataEnabled) {
         return;
     }
-    
+
     if (!dic || [dic allKeys].count == 0) {
         return;
     }
-    
+
     [[SensorsAnalyticsSDK sharedInstance] set:dic];
 }
 
@@ -111,39 +135,48 @@ static SensorsManagement *manager = nil;
     if (!_sensorsDataEnabled) {
         return;
     }
-    
+
     if (!dic || [dic allKeys].count == 0) {
         return;
     }
-    
+
     [[SensorsAnalyticsSDK sharedInstance] registerSuperProperties:dic];
 }
 
 // 取消注册公共属性
 - (void)setUnregisterSuperProperty:(NSString *)key {
-	if (!key || key.length == 0) {
-		return;
-	}
-	
-	[[SensorsAnalyticsSDK sharedInstance] unregisterSuperProperty:key];
+    if (!key || key.length == 0) {
+        return;
+    }
+
+    [[SensorsAnalyticsSDK sharedInstance] unregisterSuperProperty:key];
 }
 
 // 获取当前注册的公共属性
 - (NSDictionary *)getCurrentSuperProperties {
-	NSDictionary *dic = [[SensorsAnalyticsSDK sharedInstance] currentSuperProperties];
-	return dic;
+    NSDictionary *dic = [[SensorsAnalyticsSDK sharedInstance] currentSuperProperties];
+    return dic;
+}
+
+- (NSDictionary *)getPresetProperties {
+    NSDictionary *dic = [[SensorsAnalyticsSDK sharedInstance] getPresetProperties];
+    return dic;
 }
 
 - (void)logout {
-	[[SensorsAnalyticsSDK sharedInstance] logout];
+    [[SensorsAnalyticsSDK sharedInstance] logout];
 }
 
 - (void)login:(NSString *)loginId {
-	[[SensorsAnalyticsSDK sharedInstance] login:loginId];
+    [[SensorsAnalyticsSDK sharedInstance] login:loginId];
 }
 
 - (void)bind:(NSString *)key value:(NSString *)value {
-	[[SensorsAnalyticsSDK sharedInstance] bind:key value:value];
+    [[SensorsAnalyticsSDK sharedInstance] bind:key value:value];
+}
+
+- (void)trackAppInstallWithProperties:(NSDictionary *)properties {
+    [SensorsAnalyticsSDK.sharedInstance trackAppInstallWithProperties:properties];
 }
 
 #else

@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstanceWithLaunchOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl openLog:(BOOL)open;
 
++ (instancetype)sharedInstanceWithLaunchOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl toNativeSize:(NSInteger)toNativeSize openLog:(BOOL)open;
+
 @property (nonatomic, strong) NSDictionary *launchOptions;
 
 @property (nonatomic, assign) BOOL sensorsDataEnabled;
@@ -36,6 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 // 获取当前注册的公共属性
 - (NSDictionary *)getCurrentSuperProperties;
 
+- (NSDictionary *)getPresetProperties;
+
 //  注销，清空当前用户的 loginId
 - (void)logout;
 
@@ -44,6 +48,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 功能下绑定业务 ID 功能
 - (void)bind:(NSString *)key value:(NSString *)value;
+
+- (void)trackAppInstallWithProperties:(NSDictionary *)properties;
 @end
 
 NS_ASSUME_NONNULL_END
