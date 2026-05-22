@@ -35,6 +35,7 @@ static SensorsManagement *manager = nil;
 }
 
 - (void)SensorsAnalyticsByOptions:(NSDictionary *)launchOptions baseUrl:(NSString *)baseUrl openLog:(BOOL)open {
+	NSString * SensorsAnalyticsUrl = baseUrl;
 	SAConfigOptions *options = [[SAConfigOptions alloc] initWithServerURL:SensorsAnalyticsUrl launchOptions:launchOptions];
 	//神策上报打通APP与H5
 	options.enableJavaScriptBridge = YES;
