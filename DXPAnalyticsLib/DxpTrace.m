@@ -37,8 +37,19 @@ static DxpTrace *dxpTrace = nil;
 	[SensorsManagement sharedInstanceWithLaunchOptions:self.launchOptions baseUrl:self.traceUrl toNativeSize:self.traceFlushBulkSize openLog:self.isOpenLog];
 }
 
-#pragma mark - Trace
+- (void)setTracePublicProperties:(NSDictionary *)tracePublicProperties {
+	_tracePublicProperties = tracePublicProperties;
+	[[SensorsManagement sharedInstance] setRegisterSuperProperties:tracePublicProperties];
+}
 
+- (void)setTraceType:(DxpTraceType)traceType {
+	_traceType = traceType;
+	if (traceType == ONLY_CDP || traceType == BOTH) {
+		[SensorsManagement sharedInstance].sensorsDataEnabled = YES;
+	}
+}
+
+#pragma mark - Trace
 - (void)trace:(EventTraceData *)eventData {
     if (!eventData || eventData.eventName.length == 0) {
         return;
