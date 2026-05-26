@@ -8,7 +8,6 @@
 #import "DxpTrace.h"
 #import "GoogleAnalyticsManagement.h"
 #import "SensorsManagement.h"
-#import "GoogleAnalyticsManagement.h"
 
 static DxpTrace *dxpTrace = nil;
 
@@ -46,6 +45,9 @@ static DxpTrace *dxpTrace = nil;
 	_traceType = traceType;
 	if (traceType == ONLY_CDP || traceType == BOTH) {
 		[SensorsManagement sharedInstance].sensorsDataEnabled = YES;
+	}
+	if (traceType == ONLY_GA || traceType == BOTH) {
+		[GoogleAnalyticsManagement sharedInstance].gaEnable = YES;
 	}
 }
 
@@ -105,7 +107,7 @@ static DxpTrace *dxpTrace = nil;
 // 获取单个公共属性
 - (nullable id)getSuperProperty:(NSString *)key {
 	NSDictionary *dic = [[SensorsManagement sharedInstance] getCurrentSuperProperties];
-    return dic;
+    return dic[key];
 }
 
 // 获取所有公共属性
